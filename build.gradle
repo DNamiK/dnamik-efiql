@@ -1,0 +1,106 @@
+plugins {
+	id "jacoco"
+	id "io.freefair.lombok" version "6.4.3"
+}
+
+subprojects {
+	apply plugin: "java"
+	apply plugin: "jacoco"
+	apply plugin: "java-library"
+	apply plugin: "maven-publish"
+	apply plugin: "io.freefair.lombok"
+
+	sourceCompatibility = 11
+	targetCompatibility = 11
+
+	repositories {
+		mavenLocal()
+		mavenCentral()
+	}
+
+	tasks.withType(JavaCompile) {
+		options.encoding = "UTF-8"
+		options.compilerArgs << "-parameters"
+	}
+
+	task javadocJar(type: Jar) {
+		classifier = "javadoc"
+		from javadoc
+	}
+
+	task sourcesJar(type: Jar) {
+		classifier = "sources"
+		from sourceSets.main.allSource
+	}
+
+	javadoc {
+		source = sourceSets.main.allJava
+	}
+
+	artifacts {
+		archives javadocJar, sourcesJar
+	}
+
+	test {
+		useJUnitPlatform()
+	}
+
+	jacocoTestReport {
+		dependsOn test
+	}
+
+	publishing {
+		publications {
+			mavenJava(MavenPublication) {
+				from components.java
+				versionMapping {
+					usage("java-api") {
+						fromResolutionOf("runtimeClasspath")
+					}
+					usage("java-runtime") {
+						fromResolutionResult()
+					}
+				}
+				pom {
+					url = "https://github.com/dnamik/dnamik-efiql"
+					licenses {
+						license {
+							name = "GNU LGPLv3"
+							url = "https://www.gnu.org/licenses/lgpl-3.0.txt"
+							comments = "Incorporates the terms and conditions of https://www.gnu.org/licenses/gpl-3.0.txt"
+							distribution = "repo"
+						}
+					}
+					developers {
+						developer {
+							organization = "DNamiK"
+							name = "Kristijan Georgiev"
+							email = "kristijan.georgiev@gmail.com"
+							organizationUrl = "https://github.com/dnamik"
+						}
+					}
+					scm {
+						url = "https://github.com/dnamik/dnamik-efiql"
+						connection = "scm:git:git://github.com/dnamik/dnamik-efiql.git"
+						developerConnection = "scm:git:git@github.com:dnamik/dnamik-efiql.git"
+					}
+				}
+			}
+		}
+
+		repositories {
+			maven {
+				if (project.version.endsWith("-SNAPSHOT")) {
+					url "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+				} else {
+					url "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+				}
+				credentials {
+					username System.getenv("NEXUS_RM_USERNAME")
+					password System.getenv("NEXUS_RM_PASSWORD")
+				}
+			}
+		}
+	}
+
+}

@@ -1,0 +1,16 @@
+plugins {
+	id "antlr"
+}
+
+dependencies {
+	antlr "org.antlr:antlr4:$antlrVersion"
+
+   	testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$jUnitVersion"
+   	testImplementation "org.junit.jupiter:junit-jupiter-api:$jUnitVersion"
+}
+
+sourceSets.main.java.srcDirs += "${buildDir}/antlr"
+
+generateGrammarSource {
+   outputDirectory = file("${buildDir}/antlr")
+}
