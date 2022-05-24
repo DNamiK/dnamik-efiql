@@ -74,6 +74,8 @@ subprojects {
 					}
 				}
 				pom {
+					name = project.getName()
+					description = "DNamiK EFIQL - Extended Feed Item Query Language"
 					url = "https://github.com/dnamik/dnamik-efiql"
 					licenses {
 						license {
