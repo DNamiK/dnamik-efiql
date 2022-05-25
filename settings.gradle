@@ -1,2 +1,5 @@
-rootProject.name = 'dnamik-efiql'
-include('dnamik-efiql-core')
+rootProject.name = "dnamik-efiql"
+include("dnamik-efiql-jpa")
+include("dnamik-efiql-core")
+include("dnamik-efiql-spring-boot-starter")
+include("dnamik-efiql-spring-boot-autoconfigure")

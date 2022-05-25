@@ -1,14 +1,17 @@
 plugins {
 	id "jacoco"
-	id "io.freefair.lombok" version "6.4.3"
+	id "io.freefair.lombok" version "$freeFairLombokVersion"
+	id "org.springframework.boot" version "$springBootVersion" apply false
 }
 
 subprojects {
 	apply plugin: "java"
 	apply plugin: "jacoco"
+    apply plugin: "signing"
 	apply plugin: "java-library"
 	apply plugin: "maven-publish"
 	apply plugin: "io.freefair.lombok"
+	apply plugin: "io.spring.dependency-management"
 
 	sourceCompatibility = 11
 	targetCompatibility = 11
@@ -59,12 +62,28 @@ subprojects {
 		dependsOn test
 	}
 
+	if (!version.toString().endsWith("-SNAPSHOT")) {
+		ext["signing.keyId"] = System.getenv("SIGNING_KEY_ID")
+		ext["signing.password"] = System.getenv("SIGNING_PASSWORD")
+		ext["signing.secretKeyRingFile"] = System.getenv("SIGNING_SECRET_KEY_RING_FILE")
+
+		signing {
+			sign publishing.publications
+		}
+	}
+
+	dependencyManagement {
+		imports {
+			mavenBom(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES)
+		}
+	}
+
 	publishing {
 		publications {
 			mavenJava(MavenPublication) {
 				from components.java
 				artifact javadocJar
-	            artifact sourcesJar
+				artifact sourcesJar
 				versionMapping {
 					usage("java-api") {
 						fromResolutionOf("runtimeClasspath")

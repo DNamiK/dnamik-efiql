@@ -5,8 +5,8 @@ plugins {
 dependencies {
 	antlr "org.antlr:antlr4:$antlrVersion"
 
-   	testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$jUnitVersion"
-   	testImplementation "org.junit.jupiter:junit-jupiter-api:$jUnitVersion"
+   	testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine"
+   	testImplementation "org.junit.jupiter:junit-jupiter-api"
 }
 
 sourceSets.main.java.srcDirs += "${buildDir}/antlr"
