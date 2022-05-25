@@ -5,6 +5,6 @@ dependencies {
 	compileOnly "javax.persistence:javax.persistence-api"
 	compileOnly "org.springframework.data:spring-data-jpa"
 
-   	testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$jUnitVersion"
-   	testImplementation "org.junit.jupiter:junit-jupiter-api:$jUnitVersion"
+   	testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine"
+   	testImplementation "org.junit.jupiter:junit-jupiter-api"
 }

@@ -1,7 +1,7 @@
 plugins {
 	id "jacoco"
-	id "io.freefair.lombok" version "6.4.3"
-	id "org.springframework.boot" version "2.7.0" apply false
+	id "io.freefair.lombok" version "$freeFairLombokVersion"
+	id "org.springframework.boot" version "$springBootVersion" apply false
 }
 
 subprojects {
@@ -11,15 +11,10 @@ subprojects {
 	apply plugin: "java-library"
 	apply plugin: "maven-publish"
 	apply plugin: "io.freefair.lombok"
+	apply plugin: "io.spring.dependency-management"
 
-	if (it.name != "dnamik-efiql-core") {
-		apply plugin: "io.spring.dependency-management"
-
-		dependencyManagement {
-			imports {
-				mavenBom(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES)
-			}
-		}
+	if (it.name.startsWith("dnamik-efiql-spring-boot")) {
+		apply plugin: "org.springframework.boot"
 	}
 
 	sourceCompatibility = 11
@@ -78,6 +73,12 @@ subprojects {
 
 		signing {
 			sign publishing.publications
+		}
+	}
+
+	dependencyManagement {
+		imports {
+			mavenBom(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES)
 		}
 	}
 
