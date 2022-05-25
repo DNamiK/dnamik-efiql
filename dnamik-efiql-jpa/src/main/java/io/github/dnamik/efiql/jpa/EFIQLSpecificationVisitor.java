@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-package io.github.dnamik.efiql.spring.jpa;
+package io.github.dnamik.efiql.jpa;
 
 import org.springframework.data.jpa.domain.Specification;
 

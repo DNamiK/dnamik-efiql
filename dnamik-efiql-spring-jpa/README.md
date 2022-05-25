@@ -1,1 +1,0 @@
-# DNamiK EFIQL Spring JPA
