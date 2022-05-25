@@ -1,0 +1,3 @@
+dependencies {
+	api(project(":dnamik-efiql-spring-boot-autoconfigure"))
+}

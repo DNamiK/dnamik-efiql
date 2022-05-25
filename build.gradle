@@ -10,7 +10,16 @@ subprojects {
 	apply plugin: "java-library"
 	apply plugin: "maven-publish"
 	apply plugin: "io.freefair.lombok"
-    apply plugin: "io.spring.dependency-management"
+
+	if (it.name != "dnamik-efiql-core") {
+		apply plugin: "io.spring.dependency-management"
+
+		dependencyManagement {
+			imports {
+				mavenBom(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES)
+			}
+		}
+	}
 
 	sourceCompatibility = 11
 	targetCompatibility = 11
@@ -61,18 +70,12 @@ subprojects {
 		dependsOn test
 	}
 
-	dependencyManagement {
-		imports {
-			mavenBom(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES)
-		}
-	}
-
 	publishing {
 		publications {
 			mavenJava(MavenPublication) {
 				from components.java
 				artifact javadocJar
-	            artifact sourcesJar
+				artifact sourcesJar
 				versionMapping {
 					usage("java-api") {
 						fromResolutionOf("runtimeClasspath")
