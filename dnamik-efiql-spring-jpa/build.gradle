@@ -1,0 +1,10 @@
+dependencies {
+	implementation(project(":dnamik-efiql-core"))
+
+	runtimeOnly "org.hibernate:hibernate-core"
+	runtimeOnly "javax.persistence:javax.persistence-api"
+	runtimeOnly "org.springframework.data:spring-data-jpa"
+
+   	testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$jUnitVersion"
+   	testImplementation "org.junit.jupiter:junit-jupiter-api:$jUnitVersion"
+}

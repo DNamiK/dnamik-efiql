@@ -1,6 +1,7 @@
 plugins {
 	id "jacoco"
 	id "io.freefair.lombok" version "6.4.3"
+	id "org.springframework.boot" version "2.7.0" apply false
 }
 
 subprojects {
@@ -9,6 +10,7 @@ subprojects {
 	apply plugin: "java-library"
 	apply plugin: "maven-publish"
 	apply plugin: "io.freefair.lombok"
+    apply plugin: "io.spring.dependency-management"
 
 	sourceCompatibility = 11
 	targetCompatibility = 11
@@ -57,6 +59,12 @@ subprojects {
 
 	jacocoTestReport {
 		dependsOn test
+	}
+
+	dependencyManagement {
+		imports {
+			mavenBom(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES)
+		}
 	}
 
 	publishing {
