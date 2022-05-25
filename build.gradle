@@ -7,6 +7,7 @@ plugins {
 subprojects {
 	apply plugin: "java"
 	apply plugin: "jacoco"
+    apply plugin: "signing"
 	apply plugin: "java-library"
 	apply plugin: "maven-publish"
 	apply plugin: "io.freefair.lombok"
@@ -68,6 +69,16 @@ subprojects {
 
 	jacocoTestReport {
 		dependsOn test
+	}
+
+	if (!version.toString().endsWith("-SNAPSHOT")) {
+		ext["signing.keyId"] = System.env.SIGNING_KEY_ID
+		ext["signing.password"] = System.env.SIGNING_PASSWORD
+		ext["signing.secretKeyRingFile"] = System.env.SIGNING_SECRET_KEY_RING_FILE
+
+		signing {
+			sign publishing.publications
+		}
 	}
 
 	publishing {
