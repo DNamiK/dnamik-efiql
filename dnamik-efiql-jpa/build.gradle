@@ -1,5 +1,5 @@
 dependencies {
-	implementation(project(":dnamik-efiql-core"))
+	api(project(":dnamik-efiql-core"))
 
 	compileOnly "org.hibernate:hibernate-core"
 	compileOnly "javax.persistence:javax.persistence-api"

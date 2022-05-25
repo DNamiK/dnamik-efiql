@@ -1,0 +1,7 @@
+dependencies {
+	api(project(":dnamik-efiql-jpa"))
+
+    implementation "org.springframework.boot:spring-boot-autoconfigure"
+	compileOnly "org.springframework.boot:spring-boot-configuration-processor"
+	annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+}

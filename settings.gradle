@@ -1,3 +1,4 @@
 rootProject.name = 'dnamik-efiql'
 include('dnamik-efiql-core')
 include('dnamik-efiql-jpa')
+include('dnamik-efiql-spring-boot-autoconfigure')
